@@ -7,7 +7,7 @@
 
 ​	1. Install [Python](https://www.python.org/downloads/)
 
-​	2. Download the [latest release](https://github.com/TriLinder/YeelightControl/releases), and move it into a separate folder.
+​	2. Download the [latest release](https://github.com/TriLinder/YeelightControl/releases), and decompress it into a separate folder.
 
 ​	3. Install the [yeelight module](https://pypi.org/project/yeelight/) and the [PySimpleGUI module](https://pypi.org/project/PySimpleGUI/).
 
