@@ -1,7 +1,7 @@
 # YeelightControl
  A simple and fast Python GUI app to control your Yeelight device.
 
-
+‎‏‏‎ ‎
 
 **How to install:**
 
@@ -17,7 +17,7 @@
 
 ​	6. Done!
 
-
+‏‏‎ ‎‎‏‏‎ ‎‏‏‎ ‎
 
 **Screenshots:**
 
@@ -25,13 +25,13 @@
 
 ​	<img src="Screenshots/bulbNormal.png" alt="A Yeelight bulb without any RGB or color temperature functionality" style="zoom:75%;" />
 
-​	
+​	‏‏‎ ‎‏‏‎ ‎
 
 ​	A Yeelight bulb supporting color temperatures
 
 ​	<img src="Screenshots/bulbTemp.png" alt="A Yeelight bulb supporting color temperature" style="zoom:75%;" />
 
-​	
+​	‏‏‎ ‎
 
 ​	A Yeelight bulb supporting both RGB and color temperatures
 
