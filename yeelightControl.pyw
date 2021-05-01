@@ -109,7 +109,10 @@ def mainWindow() :
                     color = lastColor
                 color = color.lstrip("#")
                 rgb = tuple(int(color[i:i+2], 16) for i in (0, 2, 4)) #Thanks @john1024 on StackOverflow, converts HEX to RGB
-                bulb.set_rgb(*rgb)
+                if not rgb == (0, 0, 0) :
+                    bulb.set_rgb(*rgb)
+                else :
+                    bulb.set_rgb(1, 1, 1)
         except :
             sg.popup_error('Something went wrong. Make sure the IP Address is correct and that LAN Control is turned on in the yeelight app.\nIf everything is set up correctly, you may also be getting rate limited, try again in a minute.', title="Error")
         
