@@ -52,7 +52,8 @@ def mainWindow() :
         properties = bulb.get_properties()
         lastPower = properties["power"] == "on"
         lastBrightness = int(properties["bright"])
-        bulbType = str(bulb.bulb_type)
+        #bulbType = str(bulb.bulb_type)
+        bulbType = "disabled"
         hasColor = bulbType == "BulbType.Color"
         hasTemp = bulbType == "BulbType.WhiteTemp" or bulbType == "BulbType.Color"
         lastColor = lastColor = "#ffffff"
@@ -77,13 +78,17 @@ def mainWindow() :
                 [sg.Button('Set')] ]
 
     window = sg.Window('Yeelight', layout, no_titlebar = False, grab_anywhere = False, keep_on_top = False, margins = (8, 8), icon="icon.ico")
+
     while True:
         event, values = window.read()
         if event == sg.WIN_CLOSED or event == 'Cancel':
             break
         power = values[0]
         brightness = int(values[2])
-        color = values["Select color"]
+        if hasColor :
+            color = values["Select color"]
+        else :
+            color = "#ffffff"
 
         if event == "Reset" : #Sets all values to fully bright white color
             color = lastColor
