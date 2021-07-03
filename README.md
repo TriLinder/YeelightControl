@@ -21,19 +21,4 @@
 
 **Screenshots:**
 
-​	A Yeelight bulb without any RGB or color temperature functionality
-
 ​	<img src="Screenshots/bulbNormal.png" alt="A Yeelight bulb without any RGB or color temperature functionality" style="zoom:75%;" />
-
-​	‏‏‎ ‎‏‏‎ ‎
-
-​	A Yeelight bulb supporting color temperatures
-
-​	<img src="Screenshots/bulbTemp.png" alt="A Yeelight bulb supporting color temperature" style="zoom:75%;" />
-
-​	‏‏‎ ‎
-
-​	A Yeelight bulb supporting both RGB and color temperatures
-
-<img src="Screenshots/bulbColor.png" alt="A Yeelight bulb supporting both RGB and color temperature" style="zoom:75%;" />
-
