@@ -1,24 +1,29 @@
 # YeelightControl
+
  A simple and fast Python GUI app to control your Yeelight device.
 
-‎‏‏‎ ‎
+‎‏‏‎ ‎‏‏‎ ‎‎‏‏‎ ‎‏‏‎ ‎
 
-**How to install:**
+**Make sure to enable LAN Control inside the offical Yeelight app**
 
-​	1. Install [Python](https://www.python.org/downloads/)
+‏‏‎ ‎‎‏‏‎ ‎‏‏‎ ‎
 
-​	2. Download the [latest release](https://github.com/TriLinder/YeelightControl/releases), and decompress it into a separate folder.
+**How to build to .exe:**
 
-​	3. Install the [yeelight module](https://pypi.org/project/yeelight/) and the [PySimpleGUI module](https://pypi.org/project/PySimpleGUI/).
+​    1. Install [Python](https://www.python.org/downloads/)
 
-​	4. Enable `LAN Control` in the official Yeelight app. 
+​    2. Clone this repository
 
-​	5. Run `yeelightControl.pyw`
+    3. Run `pip install -r requirements.txt` inside the folder
 
-​	6. Done!
+    4. Make sure the app works when you launch `yeelightControl.pyw`
+
+    5. If it does, run `build.bat`
+
+    6. Done! You should now find the .exe file in the `dist` directory
 
 ‏‏‎ ‎‎‏‏‎ ‎‏‏‎ ‎
 
 **Screenshots:**
 
-​	<img src="Screenshots/bulbNormal.png" alt="A Yeelight bulb without any RGB or color temperature functionality" style="zoom:75%;" />
+​    <img src="Screenshots/bulbNormal.png" alt="A Yeelight bulb without any RGB or color temperature functionality" style="zoom:75%;" />

@@ -1,46 +1,73 @@
 #Import modules, throw an error if they cannot be imported
 try :
     import PySimpleGUI as sg
-except :
-    input("It seems like you did not install the PySimpleGUI module..\nPlease install PySimpleGUI")
+except ValueError :
+    input("It seems like you had not installed the PySimpleGUI module..\nPlease install PySimpleGUI")
     quit()
 
 try :
     import yeelight
-except :
-    sg.popup_error("It seems like you did not install the yeelight module..\nPlease install yeelight", title="Fatal error")
+except ValueError :
+    sg.popup_error("It seems like had not not installed the yeelight module..\nPlease install yeelight", title="Fatal error")
+    quit()
+
+try :
+    import ipaddress
+except ImportError :
+    sg.popup_error("It seems like you had not installed the ipaddress module..\nPlease install ipaddress", title="Fatal error")
     quit()
 
 import os
+import sys
 
 #Location of a file that includes the IP Address of the yeelight lightbulb
 ipFile = "yeelightIP.txt"
 
-#Creates the file if it doesnt exist, if it does, sets the variable "ip" from the file
-if not os.path.isfile(ipFile) :
-    with open(ipFile, "w") as f :
-        sg.theme('LightGrey2')
-        layout = [  [sg.Text('Enter your yeelight device IP Address:')],
-            [sg.InputText()],
-            [sg.Button('Submit'), sg.Button('Cancel')] ]
-        window = sg.Window('Yeelight', layout, no_titlebar = False, grab_anywhere = False, keep_on_top = False, margins = (8, 8), icon="icon.ico")
-        while True:
-            event, values = window.read()
-            if event == sg.WIN_CLOSED or event == 'Cancel':
-                quit()
-            ip = values[0]
-            f.write(ip)
-            break
-        window.close()
+try:
+    base_path = sys._MEIPASS
+except Exception:
+    base_path = os.path.abspath(".")
 
-else :
-    with open(ipFile, "r") as f :
-        ip = f.read()
+iconPath = os.path.join(base_path, "icon.ico")
 
-bulb = yeelight.Bulb(ip)
+def ipDialog(forceIPChange) :
+    #Creates the file if it doesnt exist, if it does, sets the variable "ip" from the file
+    if forceIPChange or not os.path.isfile(ipFile) :
+        with open(ipFile, "w") as f :
+            sg.theme('LightGrey2')
+            layout = [  [sg.Text('Enter your Yeelight device IP Address:')],
+                [sg.InputText()],
+                [sg.Button('Submit')] ]
+            window = sg.Window('Yeelight', layout, no_titlebar = True, grab_anywhere = True, keep_on_top = True, margins = (8, 8), icon=iconPath)
+            while True:
+                event, values = window.read()
+                if event == sg.WIN_CLOSED:
+                    quit()
+                ip = values[0]
+                f.write(ip)
+                break
+            window.close()
 
-def mainWindow() :
+    else :
+        with open(ipFile, "r") as f :
+            ip = f.read()
+
+    ip = ip.strip()
+
+    try :
+        ipaddress.ip_address(ip)
+    except ValueError :
+        sg.popup_error("Invalid IP Address set, please choose another..", title="Error")
+        ipDialog(True)
+
+    if ip == "" :
+        sg.popup_error("No IP Address set, please choose another..", title="Error")
+        ipDialog(True)
+    return ip
+
+def mainWindow(ip) :
     sg.theme('LightGrey2')
+    bulb = yeelight.Bulb(ip)
 
     #Fallbacks in case the info cannot be retrived down below
     lastBrightness = 100
@@ -53,12 +80,27 @@ def mainWindow() :
         lastPower = properties["power"] == "on"
         lastBrightness = int(properties["bright"])
         #bulbType = str(bulb.bulb_type)
-        bulbType = "disabled"
+        bulbType = "disabled" #Feature removed
         hasColor = bulbType == "BulbType.Color"
         hasTemp = bulbType == "BulbType.WhiteTemp" or bulbType == "BulbType.Color"
         lastColor = lastColor = "#ffffff"
     except :
-        sg.popup_error("Could not retrive info", title = "Error")
+        layout = [ [sg.Text('Could not retrive info, Yeelight device probably offline or LAN Control not enabled. Try again in a minute..')],
+                [[sg.Button("Change IP Address"), sg.Button('Ok')]]]
+        window = sg.Window('Yeelight', layout, no_titlebar = False, grab_anywhere = False, keep_on_top = False, margins = (8, 8), icon=iconPath)
+                
+        while True:
+            event, values = window.read()
+            if event == sg.WIN_CLOSED:
+                quit()
+
+            if event == "Change IP Address" :
+                window.close()
+                ip = ipDialog(True)
+                mainWindow(ip)
+
+            break
+        quit()
     
     if hasColor :
         colorRow = [sg.ColorChooserButton("Select color")]
@@ -77,7 +119,7 @@ def mainWindow() :
                 tempRow,
                 [sg.Button('Set')] ]
 
-    window = sg.Window('Yeelight', layout, no_titlebar = False, grab_anywhere = False, keep_on_top = False, margins = (8, 8), icon="icon.ico")
+    window = sg.Window('Yeelight', layout, no_titlebar = False, grab_anywhere = False, keep_on_top = False, margins = (8, 8), icon=iconPath)
 
     while True:
         event, values = window.read()
@@ -86,7 +128,9 @@ def mainWindow() :
         power = values[0]
         brightness = int(values[2])
         if hasColor :
+            print(values)
             color = values["Select color"]
+            #color = "#ffffff"
         else :
             color = "#ffffff"
 
@@ -119,13 +163,16 @@ def mainWindow() :
                 else :
                     bulb.set_rgb(1, 1, 1)
         except :
-            sg.popup_error('Something went wrong. Make sure the IP Address is correct and that LAN Control is turned on in the yeelight app.\nIf everything is set up correctly, you may also be getting rate limited, try again in a minute.', title="Error")
+            sg.popup_error('Something went wrong.', title="Error")
+            window.close()
+            mainWindow(ip)
         
         if event == "Reset" : #Resets the whole window
             window.close()
-            mainWindow()
+            mainWindow(ip)
 
     window.close()
 
 if __name__ == "__main__" :
-    mainWindow()
+    ip = ipDialog(False)
+    mainWindow(ip)
