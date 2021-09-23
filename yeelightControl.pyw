@@ -1,13 +1,13 @@
 #Import modules, throw an error if they cannot be imported
 try :
     import PySimpleGUI as sg
-except ValueError :
+except ImportError :
     input("It seems like you had not installed the PySimpleGUI module..\nPlease install PySimpleGUI")
     quit()
 
 try :
     import yeelight
-except ValueError :
+except ImportError :
     sg.popup_error("It seems like had not not installed the yeelight module..\nPlease install yeelight", title="Fatal error")
     quit()
 
