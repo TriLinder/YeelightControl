@@ -1,3 +1,6 @@
+import os
+import sys
+
 #Import modules, throw an error if they cannot be imported
 try :
     import PySimpleGUI as sg
@@ -16,9 +19,6 @@ try :
 except ImportError :
     sg.popup_error("It seems like you had not installed the ipaddress module..\nPlease install ipaddress", title="Fatal error")
     sys.exit()
-
-import os
-import sys
 
 #Location of a file that includes the IP Address of the yeelight lightbulb
 ipFile = "yeelightIP.txt"
