@@ -22,7 +22,11 @@
 
     6. Done! You should now find the .exe file in the `dist` directory
 
-‏‏‎ ‎‎‏‏‎ ‎‏‏‎ ‎
+‏‏‎ ‎‎‏‏‎ ‎‏‏‎ 
+
+Icon credit: [https://pixabay.com/vectors/lightbulb-lamp-bulb-light-led-6518548/](https://pixabay.com/vectors/lightbulb-lamp-bulb-light-led-6518548/)
+
+
 
 **Screenshots:**
 
