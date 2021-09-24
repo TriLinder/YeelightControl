@@ -3,19 +3,19 @@ try :
     import PySimpleGUI as sg
 except ImportError :
     input("It seems like you had not installed the PySimpleGUI module..\nPlease install PySimpleGUI")
-    quit()
+    sys.exit()
 
 try :
     import yeelight
 except ImportError :
     sg.popup_error("It seems like had not not installed the yeelight module..\nPlease install yeelight", title="Fatal error")
-    quit()
+    sys.exit()
 
 try :
     import ipaddress
 except ImportError :
     sg.popup_error("It seems like you had not installed the ipaddress module..\nPlease install ipaddress", title="Fatal error")
-    quit()
+    sys.exit()
 
 import os
 import sys
@@ -42,7 +42,7 @@ def ipDialog(forceIPChange) :
             while True:
                 event, values = window.read()
                 if event == sg.WIN_CLOSED:
-                    quit()
+                    sys.exit()
                 ip = values[0]
                 f.write(ip)
                 break
@@ -58,11 +58,11 @@ def ipDialog(forceIPChange) :
         ipaddress.ip_address(ip)
     except ValueError :
         sg.popup_error("Invalid IP Address set, please choose another..", title="Error")
-        ipDialog(True)
+        ip = ipDialog(True)
 
     if ip == "" :
         sg.popup_error("No IP Address set, please choose another..", title="Error")
-        ipDialog(True)
+        ip = ipDialog(True)
     return ip
 
 def mainWindow(ip) :
@@ -92,7 +92,7 @@ def mainWindow(ip) :
         while True:
             event, values = window.read()
             if event == sg.WIN_CLOSED:
-                quit()
+                sys.exit()
 
             if event == "Change IP Address" :
                 window.close()
@@ -100,7 +100,7 @@ def mainWindow(ip) :
                 mainWindow(ip)
 
             break
-        quit()
+        sys.exit()
     
     if hasColor :
         colorRow = [sg.ColorChooserButton("Select color")]
