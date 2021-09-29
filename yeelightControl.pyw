@@ -28,13 +28,38 @@ try:
 except Exception:
     base_path = os.path.abspath(".")
 
-iconPath = os.path.join(base_path, "icon.ico")
+iconPath = os.path.join(base_path, "icon.ico") #Made, so that pyinstaller can detect the .ico file
+
+darkMode = False
+
+try : #Tries to detect dark mode on Windows
+    import winreg
+except ImportError :
+    darkMode = False
+
+registry = winreg.ConnectRegistry(None, winreg.HKEY_CURRENT_USER)
+reg_keypath = r"SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize"
+
+try :
+    reg_key = winreg.OpenKey(registry, reg_keypath)
+except :
+    darkMode = False
+
+for i in range(1024) :
+    try :
+        value_name, value, _ = winreg.EnumValue(reg_key, i)
+        if value_name == 'AppsUseLightTheme' :
+            darkMode = value == 0
+    except :
+        continue
+
+theme = ["LightGrey2", "DarkGrey11"][int(darkMode)]
 
 def ipDialog(forceIPChange) :
     #Creates the file if it doesnt exist, if it does, sets the variable "ip" from the file
     if forceIPChange or not os.path.isfile(ipFile) :
         with open(ipFile, "w") as f :
-            sg.theme('LightGrey2')
+            sg.theme(theme)
             layout = [  [sg.Text('Enter your Yeelight device IP Address:')],
                 [sg.InputText()],
                 [sg.Button('Submit')] ]
@@ -66,7 +91,7 @@ def ipDialog(forceIPChange) :
     return ip
 
 def mainWindow(ip) :
-    sg.theme('LightGrey2')
+    sg.theme(theme)
     bulb = yeelight.Bulb(ip)
 
     #Fallbacks in case the info cannot be retrived down below

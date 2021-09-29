@@ -26,8 +26,7 @@
 
 Icon credit: [https://pixabay.com/vectors/lightbulb-lamp-bulb-light-led-6518548/](https://pixabay.com/vectors/lightbulb-lamp-bulb-light-led-6518548/)
 
-
-
 **Screenshots:**
 
-​    <img src="Screenshots/bulbNormal.png" alt="A Yeelight bulb without any RGB or color temperature functionality" style="zoom:75%;" />
+​    <img src="Screenshots/bulbNormal.png" alt="Light mode" style="zoom:75%;" />
+    <img src="Screenshots/bulbNormal_dark.png" alt="Dark mode" style="zoom:75%;" />
